@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Francken Association Portal</title>
+    <link rel="stylesheet" href="/main.css" />
+  </head>
+  <body>
+    <header class="c-header">
+      <div class="l-container l-stack">
+        <h1>Francken Association Portal</h1>
+        <p class="u-mb-0">Membership, activities, finance, marketplace, photos, and committee budgets in one Firebase app.</p>
+      </div>
+    </header>
+
+    <main class="l-container l-stack u-p-4">
+      <section class="c-card l-stack" id="public-pages">
+        <h2 class="c-card__title">Public Pages</h2>
+        <div class="l-grid l-grid--2">
+          <article class="c-card l-stack">
+            <h3 class="c-card__title">Association Info</h3>
+            <p id="association-info" class="u-mb-0">Student association centered on collaboration, activities, and transparent finances.</p>
+          </article>
+          <article class="c-card l-stack">
+            <h3 class="c-card__title">Committees & Board</h3>
+            <ul id="committee-list" class="c-list"></ul>
+            <ul id="board-list" class="c-list u-mb-0"></ul>
+          </article>
+        </div>
+        <div class="l-grid l-grid--2">
+          <article class="c-card l-stack">
+            <h3 class="c-card__title">News</h3>
+            <ul id="news-list" class="c-list u-mb-0"></ul>
+          </article>
+          <article class="c-card l-stack">
+            <h3 class="c-card__title">Upcoming Activities</h3>
+            <ul id="upcoming-activities" class="c-list u-mb-0"></ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="c-card l-stack" id="auth-panel">
+        <h2 class="c-card__title">Member Portal Login</h2>
+        <div class="l-row">
+          <label class="c-field"><span class="c-field__label">Full name (signup only)</span><input id="auth-name" class="c-input" /></label>
+          <label class="c-field"><span class="c-field__label">Email</span><input id="auth-email" type="email" class="c-input" /></label>
+          <label class="c-field"><span class="c-field__label">Password</span><input id="auth-password" type="password" class="c-input" /></label>
+        </div>
+        <div class="l-row">
+          <button id="signup-btn" class="c-button c-button--primary">Sign Up</button>
+          <button id="login-btn" class="c-button c-button--primary">Login</button>
+          <button id="logout-btn" class="c-button c-button--secondary">Logout</button>
+        </div>
+        <p id="auth-status" class="c-status u-mb-0">Not logged in.</p>
+      </section>
+
+      <section class="c-card l-stack is-hidden" id="member-dashboard">
+        <h2 class="c-card__title">Dashboard</h2>
+        <div class="l-grid l-grid--2">
+          <article class="c-card l-stack">
+            <h3 class="c-card__title">Profile</h3>
+            <label class="c-field"><span class="c-field__label">Name</span><input id="profile-name" class="c-input" /></label>
+            <label class="c-field"><span class="c-field__label">Committee</span><input id="profile-committee" class="c-input" /></label>
+            <label class="c-field"><span class="c-field__label">Preferences</span><textarea id="profile-preferences" class="c-textarea"></textarea></label>
+            <button id="save-profile-btn" class="c-button c-button--primary">Save Profile</button>
+          </article>
+          <article class="c-card l-stack">
+            <h3 class="c-card__title">Financial Overview</h3>
+            <p>Total balance: <strong id="total-balance">€0.00</strong></p>
+            <ul id="invoice-items" class="c-list u-mb-0"></ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="c-card l-stack is-hidden" id="orders-section">
+        <h2 class="c-card__title">Food/Drink & Merchandise Orders</h2>
+        <div class="l-grid l-grid--2">
+          <article class="c-card l-stack">
+            <h3 class="c-card__title">Food & Drink</h3>
+            <label class="c-field"><span class="c-field__label">Committee filter</span><select id="committee-filter" class="c-select"><option value="">All committees</option></select></label>
+            <label class="c-field"><span class="c-field__label">Member</span><select id="member-select" class="c-select"></select></label>
+            <label class="c-field"><span class="c-field__label">Menu item</span><select id="food-select" class="c-select"></select></label>
+            <label class="c-field"><span class="c-field__label">Quantity</span><input id="food-qty" type="number" min="1" value="1" class="c-input" /></label>
+            <button id="food-order-btn" class="c-button c-button--primary">Submit Food Order</button>
+          </article>
+          <article class="c-card l-stack">
+            <h3 class="c-card__title">Merchandise Store</h3>
+            <label class="c-field"><span class="c-field__label">Merch item</span><select id="merch-select" class="c-select"></select></label>
+            <label class="c-field"><span class="c-field__label">Variant (size/color)</span><input id="merch-variant" class="c-input" /></label>
+            <label class="c-field"><span class="c-field__label">Quantity</span><input id="merch-qty" type="number" min="1" value="1" class="c-input" /></label>
+            <button id="merch-order-btn" class="c-button c-button--primary">Submit Merchandise Order</button>
+          </article>
+        </div>
+      </section>
+
+      <section class="c-card l-stack is-hidden" id="activities-section">
+        <h2 class="c-card__title">Activities & Sign-ups</h2>
+        <label class="c-field"><span class="c-field__label">Activity</span><select id="activity-select" class="c-select"></select></label>
+        <button id="activity-signup-btn" class="c-button c-button--primary">Sign Up for Activity</button>
+      </section>
+
+      <section class="c-card l-stack is-hidden" id="books-section">
+        <h2 class="c-card__title">Second-Hand Book Marketplace</h2>
+        <div class="l-row">
+          <label class="c-field"><span class="c-field__label">Search title/author</span><input id="book-search" class="c-input" /></label>
+          <button id="book-search-btn" class="c-button c-button--secondary">Search</button>
+        </div>
+        <ul id="book-list" class="c-list"></ul>
+        <h3 class="c-card__title">Sell a Book</h3>
+        <div class="l-row">
+          <label class="c-field"><span class="c-field__label">Title</span><input id="new-book-title" class="c-input" /></label>
+          <label class="c-field"><span class="c-field__label">Author</span><input id="new-book-author" class="c-input" /></label>
+          <label class="c-field"><span class="c-field__label">Condition</span><input id="new-book-condition" class="c-input" /></label>
+          <label class="c-field"><span class="c-field__label">Price</span><input id="new-book-price" type="number" step="0.01" class="c-input" /></label>
+          <button id="list-book-btn" class="c-button c-button--primary">List Book</button>
+        </div>
+      </section>
+
+      <section class="c-card l-stack is-hidden" id="photos-section">
+        <h2 class="c-card__title">Photo Galleries</h2>
+        <label class="c-field"><span class="c-field__label">Filter by activity/date</span><input id="photo-filter" class="c-input" /></label>
+        <ul id="photo-list" class="c-list u-mb-0"></ul>
+      </section>
+
+      <section class="c-card l-stack is-hidden" id="budget-section">
+        <h2 class="c-card__title">Committee Budget Portal</h2>
+        <div class="l-row">
+          <label class="c-field"><span class="c-field__label">Committee ID</span><input id="budget-committee" class="c-input" /></label>
+          <label class="c-field"><span class="c-field__label">Allocated by board</span><input id="budget-allocated" type="number" step="0.01" class="c-input" /></label>
+          <label class="c-field"><span class="c-field__label">Planned budget</span><input id="budget-planned" type="number" step="0.01" class="c-input" /></label>
+          <label class="c-field"><span class="c-field__label">Actual spent</span><input id="budget-spent" type="number" step="0.01" class="c-input" /></label>
+          <button id="submit-budget-btn" class="c-button c-button--primary">Submit Budget</button>
+        </div>
+        <ul id="budget-list" class="c-list u-mb-0"></ul>
+      </section>
+
+      <section class="c-card l-stack is-hidden" id="admin-section">
+        <h2 class="c-card__title">Admin & Board Controls</h2>
+        <div class="l-row">
+          <label class="c-field"><span class="c-field__label">Member ID</span><input id="manual-charge-member" class="c-input" /></label>
+          <label class="c-field"><span class="c-field__label">Description</span><input id="manual-charge-desc" class="c-input" /></label>
+          <label class="c-field"><span class="c-field__label">Amount</span><input id="manual-charge-amount" type="number" step="0.01" class="c-input" /></label>
+          <button id="manual-charge-btn" class="c-button c-button--danger">Add Manual Charge</button>
+        </div>
+        <button id="generate-sepa-btn" class="c-button c-button--secondary">Generate SEPA Batch (placeholder)</button>
+        <p id="admin-message" class="c-status u-mb-0"></p>
+      </section>
+    </main>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
